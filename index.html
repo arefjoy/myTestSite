@@ -4,9 +4,8 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Расчёт калоража</title>
 	<script>
-		const bodyMassIndex = 30;
-
 		function getDailyCalories() {
+			const bodyMassIndex = 30;
 			const weight = Number(document.getElementById("weight").value);
 			const weightToDrop = Number(document.getElementById("weightToDrop").value);
 			const result = (weight - weightToDrop) * bodyMassIndex;
