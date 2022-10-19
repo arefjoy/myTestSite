@@ -5,32 +5,33 @@
 	<title>Расчёт калоража</title>
 	<script>
 		const bodyMassIndex = 30;
-		function Calorues() {
-			var weigt = Number(document.getElementById("Weigt").value);
-			var weigtToDrop = Number(document.getElementById("WeigtToDrop").value);
-			var res = weigt - weigtToDrop;
-			res *= bodyMassIndex;
-			document.getElementById('textBeforeTheResult').innerHTML = 'Суточная норма подребления калорий:';
-			document.getElementById('Res').innerHTML = res;
+
+		function getDailyCalories() {
+			const weight = Number(document.getElementById("weight").value);
+			const weightToDrop = Number(document.getElementById("weightToDrop").value);
+			const result = (weight - weightToDrop) * bodyMassIndex;
+
+			document.getElementById('result').innerHTML = result;
+			document.getElementById('resultDiv').style.display = "block";
 		}
 	</script>
 </head>
 
 <body>
 	<b>Введите ваш вес:</b><br>
-	<input id="Weigt" type="text" size="15"><br><br>
-	<b>И сколько хотели-бы сбросить?</b> <br>
-	<input id="WeigtToDrop" type="text" size="15">
-	<input type="button" onClick="Calorues()" value="OK">
+	<input id="weight" type="text" size="15">
+	<br><br>
+	<b>И сколько Вы хотели бы сбросить?</b> <br>
+	<input id="weightToDrop" type="text" size="15">
+	<br><br>
+	<input type="button" onClick="getDailyCalories();" value="рассчитать">
 	<br><br><br>
-	<center>
-		<h1>
-			<p id="textBeforeTheResult"></p>
-			<font color="red">
-				<p id="Res"></p>
-			</font>
-		</h1>
-	</center>
+
+	<div id="resultDiv" style="align: center; display: none;">
+		<p>Суточная норма потребления калорий:
+			<span id="result" style="color: red"></span>
+		</p>
+	</div>
 </body>
 
 </html>
