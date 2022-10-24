@@ -1,27 +1,68 @@
-<html>
+html>
 
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Расчёт калоража</title>
 	<script>
 		function getDailyCalories() {
-			const bodyMassIndex = 30;
-			const weight = Number(document.getElementById("weight").value);
-			const weightToDrop = Number(document.getElementById("weightToDrop").value);
-			const result = (weight - weightToDrop) * bodyMassIndex;
+			const weight = Number(document.getElementById('weight').value);
+			const height = Number(document.getElementById('height').value);
+            const age = Number(document.getElementById('age').value);
+			var activityCoefficient = document.getElementById('activityCoefficient');
+			var activityValue = activityCoefficient.value; 
+			var sex = document.getElementsByName('sex');
+			var result = (10 * weight) + (6.25 * height) - (5 * age);
 
-			document.getElementById('result').innerHTML = result;
+               for(var i=0; i<sex.length; i++){
+				if (sex[i].checked){
+					var gender = sex[i].value;
+					break;
+				}
+			   }
+			
+			if (gender == "man"){
+				result = result + 5;
+			}
+			if (gender == "woman"){
+				result = result - 161;
+			}
+
+			result *= activityValue;
+
+			const resultDiet = Math.round(Math.round(result)-(Math.round(result)/100*10));
+			
+			document.getElementById('result').innerHTML = Math.round(result);
 			document.getElementById('resultDiv').style.display = "block";
+
+			document.getElementById('resultDiet').innerHTML = resultDiet;
+			document.getElementById('resultDietDiv').style.display = "block";
 		}
 	</script>
 </head>
 
 <body>
-	<b>Введите ваш вес:</b><br>
-	<input id="weight" type="text" size="15">
+	<b>Ваш вес:</b>
+	<input id="weight" type="text" size="10">
+	<br>
+	<b>Ваш рост:</b>
+	<input id="height" type="text" size="10">
+	<br>
+	<b>Ваш возраст:</b>
+	<input id="age" type="text" size="5">
 	<br><br>
-	<b>И сколько Вы хотели бы сбросить?</b> <br>
-	<input id="weightToDrop" type="text" size="15">
+	<b>Ваш пол:</b>
+	<br>
+	<div><input type="radio" name="sex" value="man">Мужской
+	<input type="radio" name="sex" value="woman">Женский</div> 
+	<br><br>
+	<b>Как часто Вы тренеруетесь?</b>
+	<select id="activityCoefficient">
+		    <option value="1.2">Не тренеруюсь</option>>
+		    <option value="1.375">1-3 раза в неделю</option>>
+			<option value="1.55">3-5 раз в неделю</option>>
+			<option value="1.725">5-6 раз в неделю</option>>
+		    <option value="1.9">Каждый день</option>>
+			</select>
 	<br><br>
 	<input type="button" onClick="getDailyCalories();" value="рассчитать">
 	<br><br><br>
@@ -29,6 +70,12 @@
 	<div id="resultDiv" style="align: center; display: none;">
 		<p>Суточная норма потребления калорий:
 			<span id="result" style="color: red"></span>
+		</p>
+	</div>
+
+	<div id="resultDietDiv" style="align: center; display: none;">
+		<p>Норма потребления калорий для постепенного похудения (1,4кг/месяц):
+			<span id="resultDiet" style="color: green"></span>
 		</p>
 	</div>
 </body>
